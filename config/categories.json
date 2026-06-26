@@ -1,0 +1,12 @@
+{
+  "_comment": "Your spending categories and the keywords that map to them. Edit freely. When you log a transaction, the note is lowercased and checked against these keywords (substring match). First category with a matching keyword wins. No match -> 'Uncategorized'. Order matters: categories higher in this file are checked first.",
+  "categories": {
+    "Food": ["food", "lunch", "dinner", "breakfast", "brunch", "coffee", "cafe", "starbucks", "mcdonald", "kfc", "restaurant", "grab food", "grabfood", "foodpanda", "snack", "groceries", "grocery", "supermarket", "ntuc", "fairprice"],
+    "Transport": ["transport", "grab", "gojek", "uber", "taxi", "mrt", "bus", "train", "petrol", "gas", "fuel", "parking", "ezlink", "toll", "flight", "airfare"],
+    "Shopping": ["shopping", "shopee", "lazada", "amazon", "clothes", "shoes", "uniqlo", "zara", "ikea", "electronics", "gadget", "lazada"],
+    "Bills": ["bill", "rent", "electricity", "water", "internet", "wifi", "phone bill", "mobile", "insurance", "subscription", "spotify", "icloud", "utilities"],
+    "Entertainment": ["entertainment", "movie", "cinema", "netflix", "disney", "game", "steam", "concert", "ticket", "bar", "drinks", "club", "karaoke"],
+    "Health": ["health", "doctor", "clinic", "hospital", "pharmacy", "guardian", "watson", "gym", "fitness", "dental", "medicine", "supplement"],
+    "Other": []
+  }
+}

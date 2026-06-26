@@ -1,0 +1,20 @@
+# Secrets — NEVER commit
+.env
+credentials.json
+token.json
+
+# Disposable processing files
+.tmp/
+
+# Local database (your private transaction data)
+budget.db
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS / editor
+.DS_Store
+Thumbs.db

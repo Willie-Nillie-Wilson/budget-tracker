@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Budget</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <main class="app">
+    <header class="hero" id="hero">
+      <p class="hero__label">Spent this month</p>
+      <h1 class="hero__amount" id="total">$0.00</h1>
+      <p class="hero__period" id="period">&nbsp;</p>
+    </header>
+
+    <section class="logger" id="logger">
+      <form id="log-form" class="logger__form" autocomplete="off">
+        <input
+          id="log-input"
+          class="logger__input"
+          name="text"
+          placeholder="lunch 12.50"
+          aria-label="Log a transaction"
+          enterkeyhint="done"
+        />
+        <button class="logger__btn" type="submit" aria-label="Log transaction">
+          <span class="logger__btn-plus">+</span>
+          <span class="logger__btn-text">Log</span>
+        </button>
+      </form>
+      <p class="logger__hint" id="log-hint">Type what you spent, then the amount.</p>
+    </section>
+
+    <section class="panel categories" id="categories-panel">
+      <h2 class="panel__title">Categories</h2>
+      <ul class="cat-list" id="category-list"></ul>
+      <p class="empty" id="categories-empty" hidden>No spending logged yet this month.</p>
+    </section>
+
+    <section class="panel recent" id="recent-panel">
+      <h2 class="panel__title">Recent</h2>
+      <ul class="recent-list" id="recent-list"></ul>
+      <p class="empty" id="recent-empty" hidden>Your latest transactions will show here.</p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
