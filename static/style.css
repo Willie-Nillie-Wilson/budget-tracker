@@ -78,8 +78,8 @@ body::before {
   background: linear-gradient(180deg, #ffffff 0%, #cfe9d4 130%);
   -webkit-background-clip: text;
   background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 60px rgba(158, 240, 168, 0.12);
+  -webkit-text-fill-color: transparent;
+  color: #e8f5eb;
 }
 
 .hero__period {
