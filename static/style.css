@@ -75,11 +75,7 @@ body::before {
   letter-spacing: -0.02em;
   margin: 0.18em 0 0.12em;
   font-variant-numeric: tabular-nums;
-  background: linear-gradient(180deg, #ffffff 0%, #cfe9d4 130%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: #e8f5eb;
+  color: #ffffff;
 }
 
 .hero__period {
