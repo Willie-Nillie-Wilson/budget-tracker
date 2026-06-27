@@ -104,6 +104,23 @@ def fix_category(transaction_id):
     return jsonify({"id": transaction_id, "category": category})
 
 
+@app.route("/api/transaction/<int:transaction_id>", methods=["DELETE"])
+@require_auth
+def remove_transaction(transaction_id):
+    """Delete a single transaction by id."""
+    if not db.delete_transaction(transaction_id):
+        return jsonify({"error": f"No transaction with id {transaction_id}"}), 404
+    return jsonify({"deleted": True})
+
+
+@app.route("/api/transactions", methods=["DELETE"])
+@require_auth
+def remove_all_transactions():
+    """Wipe all transactions."""
+    count = db.delete_all_transactions()
+    return jsonify({"deleted": count})
+
+
 def _lan_ip():
     """Best-effort detection of this machine's wifi/LAN IP for phone access."""
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

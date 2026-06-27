@@ -72,6 +72,20 @@ def update_category(transaction_id, category, db_path=DEFAULT_DB):
         return cur.rowcount > 0
 
 
+def delete_transaction(transaction_id, db_path=DEFAULT_DB):
+    """Delete a single transaction by id. Returns True if a row was removed."""
+    with get_connection(db_path) as conn:
+        cur = conn.execute("DELETE FROM transactions WHERE id = ?", (transaction_id,))
+        return cur.rowcount > 0
+
+
+def delete_all_transactions(db_path=DEFAULT_DB):
+    """Wipe every transaction. Returns the count of rows removed."""
+    with get_connection(db_path) as conn:
+        cur = conn.execute("DELETE FROM transactions")
+        return cur.rowcount
+
+
 def list_transactions(limit=None, db_path=DEFAULT_DB):
     """Return transactions newest first, optionally capped to `limit`."""
     query = "SELECT id, amount, note, category, created_at FROM transactions ORDER BY id DESC"

@@ -36,15 +36,20 @@ function renderPeriod() {
   $("period").textContent = now.toLocaleString(undefined, { month: "long", year: "numeric" });
 }
 
+let _displayedTotal = 0;
+
 function animateTotal(target) {
   const node = $("total");
+  const from = _displayedTotal;
   const start = performance.now();
   const dur = 700;
   function frame(t) {
     const p = Math.min((t - start) / dur, 1);
     const eased = 1 - Math.pow(1 - p, 3);
-    node.textContent = money(target * eased);
+    const value = from + (target - from) * eased;
+    node.textContent = money(value);
     if (p < 1) requestAnimationFrame(frame);
+    else _displayedTotal = target;
   }
   requestAnimationFrame(frame);
 }
@@ -115,6 +120,12 @@ function renderRecent(recent, newId) {
     const catWrap = el("div", { class: "recent-row__cat" }, [buildSelect(tx.category, tx.id)]);
     const main = el("div", { class: "recent-row__main" }, [note, catWrap]);
     const amount = el("div", { class: "recent-row__amount", text: money(tx.amount) });
+    const delBtn = el("button", {
+      class: "recent-row__del",
+      attrs: { "aria-label": "Delete transaction", title: "Delete" },
+      text: "×",
+    });
+    delBtn.addEventListener("click", () => deleteTransaction(tx.id));
 
     const row = el(
       "li",
@@ -122,7 +133,7 @@ function renderRecent(recent, newId) {
         class: "recent-row" + (tx.id === newId ? " is-new" : ""),
         style: { animationDelay: `${i * 0.04}s` },
       },
-      [main, amount]
+      [main, amount, delBtn]
     );
     list.appendChild(row);
   });
@@ -130,12 +141,17 @@ function renderRecent(recent, newId) {
 
 // ---------- Data ----------
 async function loadSummary(newId) {
-  const res = await fetch("/api/summary");
-  const data = await res.json();
-  AVAILABLE_CATEGORIES = data.available_categories || [];
-  animateTotal(data.total);
-  renderCategories(data.categories, data.total);
-  renderRecent(data.recent, newId);
+  try {
+    const res = await fetch("/api/summary");
+    if (!res.ok) throw new Error(`Server returned ${res.status}`);
+    const data = await res.json();
+    AVAILABLE_CATEGORIES = data.available_categories || [];
+    animateTotal(data.total);
+    renderCategories(data.categories, data.total);
+    renderRecent(data.recent, newId);
+  } catch (err) {
+    setHint("Could not load summary — " + err.message, true);
+  }
 }
 
 async function logTransaction(text) {
@@ -155,6 +171,19 @@ async function fixCategory(id, category) {
   });
   await loadSummary();
   showToast("Moved to ", category);
+}
+
+async function deleteTransaction(id) {
+  await fetch(`/api/transaction/${id}`, { method: "DELETE" });
+  await loadSummary();
+  showToast("Transaction removed");
+}
+
+async function clearAllTransactions() {
+  if (!confirm("Clear all transactions? This can't be undone.")) return;
+  await fetch("/api/transactions", { method: "DELETE" });
+  await loadSummary();
+  showToast("All transactions cleared");
 }
 
 // ---------- UI helpers ----------

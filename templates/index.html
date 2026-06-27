@@ -42,7 +42,10 @@
     </section>
 
     <section class="panel recent" id="recent-panel">
-      <h2 class="panel__title">Recent</h2>
+      <div class="panel__header">
+        <h2 class="panel__title">Recent</h2>
+        <button class="clear-all-btn" onclick="clearAllTransactions()">Clear all</button>
+      </div>
       <ul class="recent-list" id="recent-list"></ul>
       <p class="empty" id="recent-empty" hidden>Your latest transactions will show here.</p>
     </section>
